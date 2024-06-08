@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Goals = ({ id, title, description, deleteTaskHandeler }) => {
+const Goals = ({ index, title, description, deleteTaskHandeler }) => {
 
 
     const btnStyle = 'bg-red-700 hover:bg-red-600 rounded-full w-[30px] h-[30px] font-semibold flex justify-center items-center'
@@ -13,7 +13,7 @@ const Goals = ({ id, title, description, deleteTaskHandeler }) => {
             </div>
             <button
                 className={btnStyle}
-                onClick={() => deleteTaskHandeler(id)}
+                onClick={() => deleteTaskHandeler(index)}
             >
                 <span className='w-[12px] h-[4px] bg-white'></span>
             </button>

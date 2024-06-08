@@ -1,13 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Header from './components/Header'
 import Goals from './components/Goals'
 
 function App() {
 
+  const initialGoals = localStorage.getItem("goals")
+    ? JSON.parse(localStorage.getItem("goals"))
+    : []
+
   const [id, setId] = useState(1)
   const [title, setTitle] = useState("")
   const [description, setDescription] = useState("")
-  const [goals, setGoals] = useState([])
+  const [goals, setGoals] = useState(initialGoals)
 
   const addTaskHandler = (e) => {
     e.preventDefault()
@@ -17,10 +21,14 @@ function App() {
     setDescription("")
   }
 
-  const deleteTaskHandeler = (id) => {
-    const updatedGoals = goals.filter(goal => goal.id !== id)
+  const deleteTaskHandeler = (index) => {
+    const updatedGoals = goals.filter((goal, ind) => ind !== index)
     setGoals(updatedGoals)
   }
+
+  useEffect(() => {
+    localStorage.setItem("goals", JSON.stringify(goals))
+  }, [goals])
 
   const inputStyle = "py-2 px-4 border focus:outline-none rounded-md text-gray-600"
   const btnStyle = "bg-teal-600 hover:bg-teal-500 px-6 py-2 text-white text-lg rounded-md mt-8"
@@ -55,10 +63,10 @@ function App() {
         </form>
 
         {
-          goals.map((goal) => (
+          goals.map((goal, index) => (
             <Goals
-              key={goal.id}
-              id={goal.id}
+              key={index}
+              index={index}
               title={goal.title}
               description={goal.description}
               deleteTaskHandeler={deleteTaskHandeler} />
